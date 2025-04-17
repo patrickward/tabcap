@@ -6,9 +6,8 @@ I have a tendency to open too many tabs and windows, which can lead to a clutter
 This extension helps manage that by allowing you to set limits on the number of tabs per window and the number of
 windows you can have open at any time.
 
-There are many similar extensions available, some with better features, but I like to keep things simple and
-lightweight, and am weary of installing extensions from unknown sources. This extension is a personal project that I
-created to suit my needs. Use at your own risk.
+> There are many similar extensions available, some with better features, but I just wanted something simple and that I
+> could trust. It works for me, it may work for you too, but use it at your own risk.
 
 ## Features
 
@@ -45,9 +44,9 @@ firefox-manifest-alternative.json).
 
 ### Safari
 
-Safari requires additional steps to create a Safari App Extension:
-
 **Not tested on Safari, but it might work?**
+
+Safari requires additional steps to create a Safari App Extension:
 
 1. Install Xcode from the Mac App Store
 2. Create a Safari App Extension project
@@ -57,7 +56,7 @@ Safari requires additional steps to create a Safari App Extension:
 ## Usage
 
 1. Click on the extension icon to see current tab and window counts
-2. Set your preferred maximum tabs per window and maximum windows in the extension options. 
+2. Set your preferred maximum tabs per window and maximum windows in the extension options.
 3. Choose what happens when you reach the limit:
     - "Close new tab": Simply closes any tab that exceeds the limit
     - "Focus on oldest tab": Switches focus to your oldest tab instead of opening a new one
