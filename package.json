@@ -1,0 +1,10 @@
+{
+  "name": "tabcap",
+  "version": "0.0.1",
+  "description": "Web extension that limits the number of tabs and windows that can be opended.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true
+}

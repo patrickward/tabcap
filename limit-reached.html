@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tab Limit Reached</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #d93025;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+        .settings-instructions {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            text-align: left;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Tab Limit Reached</h1>
+    <p>You've reached the maximum number of tabs allowed by TabCap.</p>
+    <p>Current limits: <span id="tabLimit">10</span> tabs per window, <span id="windowLimit">3</span> windows total.</p>
+
+    <div class="settings-instructions">
+        <h3>To adjust your tab limits:</h3>
+        <p>You can either:</p>
+        <ol>
+            <li>Click the button below to open settings (this will work even when at tab limit)</li>
+            <li>Or right-click the TabCap extension icon in your browser toolbar and select "Options"</li>
+        </ol>
+    </div>
+
+    <button id="openSettings">Open Settings</button>
+    <button id="closeTab">Close This Tab</button>
+</div>
+
+<script src="limit-reached.js"></script>
+</body>
+</html>

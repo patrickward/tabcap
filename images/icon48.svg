@@ -1,0 +1,29 @@
+<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="24" cy="24" r="22" fill="#4285f4" />
+
+    <!-- Browser window 1 (bottom) -->
+    <rect x="12" y="24" width="24" height="14" rx="1" ry="1" fill="#ffffff" />
+    <rect x="12" y="24" width="24" height="3" rx="1" ry="1" fill="#e6e6e6" />
+    <circle cx="14.5" cy="25.5" r="0.8" fill="#ff6b6b" />
+    <circle cx="17" cy="25.5" r="0.8" fill="#ffdd57" />
+    <circle cx="19.5" cy="25.5" r="0.8" fill="#48c774" />
+
+    <!-- Browser window 2 (middle) -->
+    <rect x="12" y="17" width="24" height="14" rx="1" ry="1" fill="#ffffff" stroke="#e0e0e0" stroke-width="0.3" />
+    <rect x="12" y="17" width="24" height="3" rx="1" ry="1" fill="#e6e6e6" />
+    <circle cx="14.5" cy="18.5" r="0.8" fill="#ff6b6b" />
+    <circle cx="17" cy="18.5" r="0.8" fill="#ffdd57" />
+    <circle cx="19.5" cy="18.5" r="0.8" fill="#48c774" />
+
+    <!-- Browser window 3 (top) -->
+    <rect x="12" y="10" width="24" height="14" rx="1" ry="1" fill="#ffffff" stroke="#e0e0e0" stroke-width="0.3" />
+    <rect x="12" y="10" width="24" height="3" rx="1" ry="1" fill="#e6e6e6" />
+    <circle cx="14.5" cy="11.5" r="0.8" fill="#ff6b6b" />
+    <circle cx="17" cy="11.5" r="0.8" fill="#ffdd57" />
+    <circle cx="19.5" cy="11.5" r="0.8" fill="#48c774" />
+
+    <!-- Limit indicator -->
+    <circle cx="35" cy="13" r="9" fill="#ff5252" />
+    <text x="35" y="16" font-family="Arial, sans-serif" font-size="7" text-anchor="middle" fill="white" font-weight="bold">3</text>
+</svg>

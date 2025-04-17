@@ -1,0 +1,12 @@
+<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="8" cy="8" r="7.5" fill="#4285f4" />
+
+    <!-- Browser tabs simplified -->
+    <rect x="4" y="5" width="8" height="6" rx="1" fill="white" />
+    <rect x="4" y="5" width="8" height="1.5" rx="1" fill="#e6e6e6" />
+
+    <!-- Limit indicator -->
+    <circle cx="11.5" cy="4.5" r="2.8" fill="#ff5252" />
+    <text x="11.5" y="5.5" font-family="Arial, sans-serif" font-size="3" text-anchor="middle" fill="white" font-weight="bold">3</text>
+</svg>

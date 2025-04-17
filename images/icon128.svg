@@ -1,0 +1,29 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="64" cy="64" r="60" fill="#4285f4" />
+
+    <!-- Browser window 1 (bottom) -->
+    <rect x="30" y="66" width="68" height="36" rx="2" ry="2" fill="#ffffff" />
+    <rect x="30" y="66" width="68" height="8" rx="2" ry="2" fill="#e6e6e6" />
+    <circle cx="36" cy="70" r="2" fill="#ff6b6b" />
+    <circle cx="44" cy="70" r="2" fill="#ffdd57" />
+    <circle cx="52" cy="70" r="2" fill="#48c774" />
+
+    <!-- Browser window 2 (middle) -->
+    <rect x="30" y="46" width="68" height="36" rx="2" ry="2" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+    <rect x="30" y="46" width="68" height="8" rx="2" ry="2" fill="#e6e6e6" />
+    <circle cx="36" cy="50" r="2" fill="#ff6b6b" />
+    <circle cx="44" cy="50" r="2" fill="#ffdd57" />
+    <circle cx="52" cy="50" r="2" fill="#48c774" />
+
+    <!-- Browser window 3 (top) -->
+    <rect x="30" y="26" width="68" height="36" rx="2" ry="2" fill="#ffffff" stroke="#e0e0e0" stroke-width="1" />
+    <rect x="30" y="26" width="68" height="8" rx="2" ry="2" fill="#e6e6e6" />
+    <circle cx="36" cy="30" r="2" fill="#ff6b6b" />
+    <circle cx="44" cy="30" r="2" fill="#ffdd57" />
+    <circle cx="52" cy="30" r="2" fill="#48c774" />
+
+    <!-- Limit indicator -->
+    <circle cx="94" cy="34" r="24" fill="#ff5252" />
+    <text x="94" y="40" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="white" font-weight="bold">3</text>
+</svg>
