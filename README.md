@@ -1,13 +1,13 @@
-- The "Open in New Window" button only appears if you're not already at your window limit# TabCap
+# TabCap
 
 A simple browser extension to limit the number of tabs and windows in your browser.
 
 I have a tendency to open too many tabs and windows, which can lead to a cluttered workspace and decreased productivity.
-This extension helps manage that by allowing you to set limits on the number of tabs per window and the number of
+This extension helps me manage that by allowing me to set limits on the number of tabs per window and the number of
 windows you can have open at any time.
 
-> There are many similar extensions available, some with better features, but I just wanted something simple and that I
-> could trust. It works for me, it may work for you too, but use it at your own risk.
+> There are many similar extensions available, some with better features, but I just need something simple I
+> can trust. It works for me, it may work for you too, but use it at your own risk.
 
 ## Features
 
@@ -21,6 +21,7 @@ windows you can have open at any time.
         - Open the URL in a new window (if not at window limit)
         - Bookmark the URL to your chosen folder with an auto-generated title
 - Silent handling of window limit (new windows that exceed the limit just don't open)
+- The "Open in New Window" button only appears if you're not already at your window limit# TabCap
 
 ## Installation
 
@@ -114,5 +115,4 @@ tabcap/
 - The options page is always allowed to open, even when at tab limit
 - You can access settings through the popup or by right-clicking the extension icon
 - When you reach the window limit, new windows will simply not open
-
 - The bookmark feature automatically extracts a title from the URL, which you can edit before saving
