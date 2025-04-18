@@ -20,6 +20,11 @@
         input[type="number"] {
             width: 60px;
         }
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
         select {
             padding: 5px;
             width: 100%;
@@ -42,10 +47,17 @@
             font-style: italic;
             display: none;
         }
+        .section-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
     </style>
 </head>
 <body>
 <h1>TabCap Settings</h1>
+
+<h2 class="section-header">Tab Limits</h2>
 
 <div class="form-group">
     <label for="maxTabsPerWindow">Maximum tabs per window:</label>
@@ -64,6 +76,17 @@
         <option value="focus">Focus on oldest tab</option>
         <option value="redirect">Show limit notification (reuses same tab)</option>
     </select>
+</div>
+
+<h2 class="section-header">Bookmark Settings</h2>
+
+<div class="form-group">
+    <label for="defaultBookmarkFolder">Default bookmark folder name:</label>
+    <input type="text" id="defaultBookmarkFolder" placeholder="TabCap">
+    <p style="font-size: 12px; color: #666; margin-top: 5px;">
+        Enter a name for the bookmark folder. If it doesn't exist, it will be created at the top level of your bookmarks.
+        Leave empty to use "TabCap" as the default folder name.
+    </p>
 </div>
 
 <button id="save">Save Options</button>

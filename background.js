@@ -1,17 +1,19 @@
 let settings = {
   maxTabsPerWindow: 10,
   maxTotalWindows: 3,
-  newTabAction: 'focus' // 'focus', 'close', 'redirect'
+  newTabAction: 'focus', // 'focus', 'close', 'redirect'
+  defaultBookmarkFolder: 'TabCap'
 };
 
 // Store reference to limit notification tab (if any)
 let limitNotificationTabId = null;
 
 // Load settings when extension starts
-chrome.storage.sync.get(['maxTabsPerWindow', 'maxTotalWindows', 'newTabAction'], (result) => {
+chrome.storage.sync.get(['maxTabsPerWindow', 'maxTotalWindows', 'newTabAction', 'defaultBookmarkFolder'], (result) => {
   if (result.maxTabsPerWindow) settings.maxTabsPerWindow = result.maxTabsPerWindow;
   if (result.maxTotalWindows) settings.maxTotalWindows = result.maxTotalWindows;
   if (result.newTabAction) settings.newTabAction = result.newTabAction;
+  if (result.defaultBookmarkFolder) settings.defaultBookmarkFolder = result.defaultBookmarkFolder;
 });
 
 // Listen for setting changes
@@ -19,6 +21,7 @@ chrome.storage.onChanged.addListener((changes) => {
   if (changes.maxTabsPerWindow) settings.maxTabsPerWindow = changes.maxTabsPerWindow.newValue;
   if (changes.maxTotalWindows) settings.maxTotalWindows = changes.maxTotalWindows.newValue;
   if (changes.newTabAction) settings.newTabAction = changes.newTabAction.newValue;
+  if (changes.defaultBookmarkFolder) settings.defaultBookmarkFolder = changes.defaultBookmarkFolder.newValue;
 });
 
 // Listen for tab creation
@@ -151,6 +154,34 @@ function handleWindowLimit(windows) {
   }
 }
 
+// Helper function to find a bookmark folder by name or create it if it doesn't exist
+function findOrCreateBookmarkFolder(folderName, callback) {
+  // Search for the folder
+  chrome.bookmarks.search({ title: folderName }, (results) => {
+    // Filter to only include folders (items without a url)
+    const folders = results.filter(item => !item.url);
+
+    if (folders.length > 0) {
+      // Found a matching folder, use the first one
+      callback(folders[0].id);
+    } else {
+      // Folder doesn't exist, create it in the Bookmarks Bar
+      chrome.bookmarks.getTree((tree) => {
+        // Find the Bookmarks Bar folder
+        const bookmarksBar = tree[0].children.find(node => node.id === "1");
+
+        // Create the folder
+        chrome.bookmarks.create({
+          parentId: bookmarksBar ? bookmarksBar.id : "1", // Default to Bookmarks Bar, fallback to "1"
+          title: folderName
+        }, (newFolder) => {
+          callback(newFolder.id);
+        });
+      });
+    }
+  });
+}
+
 // Handle direct navigation messages from the limit-reached page
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "openInNewWindow" && request.url) {
@@ -183,12 +214,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === "bookmarkUrl" && request.url && request.title) {
-    chrome.bookmarks.create({
-      title: request.title,
-      url: request.url
-    }, (bookmark) => {
-      sendResponse({ success: true, bookmark: bookmark });
+    // Always use the configured folder name (or default to "TabCap")
+    const folderName = settings.defaultBookmarkFolder || "TabCap";
+
+    // Find or create the folder, then add the bookmark
+    findOrCreateBookmarkFolder(folderName, (folderId) => {
+      chrome.bookmarks.create({
+        parentId: folderId,
+        title: request.title,
+        url: request.url
+      }, (bookmark) => {
+        sendResponse({ success: true, bookmark: bookmark });
+      });
     });
-    return true;
+
+    return true; // Indicates we'll send a response asynchronously
   }
 });

@@ -3,11 +3,13 @@ function saveOptions() {
   const maxTabsPerWindow = document.getElementById('maxTabsPerWindow').value;
   const maxTotalWindows = document.getElementById('maxTotalWindows').value;
   const newTabAction = document.getElementById('newTabAction').value;
+  const defaultBookmarkFolder = document.getElementById('defaultBookmarkFolder').value;
 
   chrome.storage.sync.set({
     maxTabsPerWindow: parseInt(maxTabsPerWindow, 10),
     maxTotalWindows: parseInt(maxTotalWindows, 10),
-    newTabAction: newTabAction
+    newTabAction: newTabAction,
+    defaultBookmarkFolder: defaultBookmarkFolder
   }, () => {
     // Update status to let user know options were saved
     const status = document.getElementById('status');
@@ -24,11 +26,13 @@ function restoreOptions() {
   chrome.storage.sync.get({
     maxTabsPerWindow: 10,
     maxTotalWindows: 3,
-    newTabAction: 'focus'
+    newTabAction: 'focus',
+    defaultBookmarkFolder: 'TabCap'
   }, (items) => {
     document.getElementById('maxTabsPerWindow').value = items.maxTabsPerWindow;
     document.getElementById('maxTotalWindows').value = items.maxTotalWindows;
     document.getElementById('newTabAction').value = items.newTabAction;
+    document.getElementById('defaultBookmarkFolder').value = items.defaultBookmarkFolder;
   });
 }
 
