@@ -9,6 +9,7 @@
             padding-top: 100px;
             background-color: #f5f5f5;
         }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -17,14 +18,37 @@
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             color: #d93025;
         }
+
         p {
             font-size: 16px;
             line-height: 1.5;
             color: #333;
         }
+
+        .url-info {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            margin: 20px 0;
+            word-break: break-all;
+            text-align: left;
+        }
+
+        .url-info code {
+            display: block;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+
         .settings-instructions {
             margin: 20px 0;
             padding: 15px;
@@ -32,8 +56,30 @@
             border-radius: 4px;
             text-align: left;
         }
-        button {
+
+        .bookmark-form {
+            margin: 20px 0;
+            text-align: left;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .bookmark-form input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
             margin-top: 20px;
+        }
+
+        button {
             padding: 10px 20px;
             background-color: #4285f4;
             color: white;
@@ -41,9 +87,36 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 14px;
+            margin: 0 5px;
         }
+
         button:hover {
             background-color: #3367d6;
+        }
+
+        button.secondary {
+            background-color: #5f6368;
+        }
+
+        button.secondary:hover {
+            background-color: #484b4f;
+        }
+
+        button.danger {
+            background-color: #ea4335;
+        }
+
+        button.danger:hover {
+            background-color: #d33426;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -52,6 +125,41 @@
     <h1>Tab Limit Reached</h1>
     <p>You've reached the maximum number of tabs allowed by TabCap.</p>
     <p>Current limits: <span id="tabLimit">10</span> tabs per window, <span id="windowLimit">3</span> windows total.</p>
+    <p>To continue browsing, you can:</p>
+    <ul style="text-align: left; margin-bottom: 20px;">
+        <li>Close some existing tabs in this window</li>
+        <li>Open the page in a new window (if you're not at your window limit)</li>
+        <li>Bookmark this URL for later reference</li>
+        <li>Adjust your tab limits in the settings</li>
+    </ul>
+
+    <div id="urlInfoContainer" class="url-info hidden">
+        <h3>You were attempting to visit:</h3>
+        <code id="attemptedUrl"></code>
+
+        <div id="windowLimitMessage" class="hidden"
+             style="margin: 10px 0; padding: 10px; background-color: #ffeaea; border-radius: 4px; color: #d93025;">
+            <strong>Window limit reached:</strong> You've reached your maximum allowed windows. So, I can't show you the
+            <strong>Open in New Window</strong> button. Close an existing window first, or increase the allowed windows in
+            the settings.
+        </div>
+
+        <div class="button-container">
+            <button id="openInNewWindow" class="danger">Open in New Window</button>
+            <button id="bookmarkBtn">Bookmark This URL</button>
+        </div>
+    </div>
+
+    <div id="bookmarkFormContainer" class="bookmark-form hidden">
+        <h3>Bookmark This URL</h3>
+        <label for="bookmarkTitle">Title:</label>
+        <input type="text" id="bookmarkTitle" placeholder="Enter a title for this bookmark">
+        <p id="bookmarkSuccessMessage" class="success-message hidden">URL has been bookmarked!</p>
+        <div class="button-container">
+            <button id="saveBookmarkBtn">Save Bookmark</button>
+            <button id="cancelBookmarkBtn" class="secondary">Cancel</button>
+        </div>
+    </div>
 
     <div class="settings-instructions">
         <h3>To adjust your tab limits:</h3>
@@ -62,8 +170,10 @@
         </ol>
     </div>
 
-    <button id="openSettings">Open Settings</button>
-    <button id="closeTab">Close This Tab</button>
+    <div class="button-container">
+        <button id="openSettings">Open Settings</button>
+        <button id="closeTab" class="secondary">Close This Tab</button>
+    </div>
 </div>
 
 <script src="limit-reached.js"></script>

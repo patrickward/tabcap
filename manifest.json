@@ -5,7 +5,8 @@
   "description": "Limits the number of tabs and windows in your browser",
   "permissions": [
     "tabs",
-    "storage"
+    "storage",
+    "bookmarks"
   ],
   "background": {
     "service_worker": "background.js"

@@ -1,4 +1,4 @@
-# TabCap
+- The "Open in New Window" button only appears if you're not already at your window limit# TabCap
 
 A simple browser extension to limit the number of tabs and windows in your browser.
 
@@ -6,8 +6,8 @@ I have a tendency to open too many tabs and windows, which can lead to a clutter
 This extension helps manage that by allowing you to set limits on the number of tabs per window and the number of
 windows you can have open at any time.
 
-> There are many similar extensions available, some with better features, but I just wanted something simple and that I
-> could trust. It works for me, it may work for you too, but use it at your own risk.
+> There are many similar extensions available, some with better features, but I just need something simple and that I
+> can trust. It works for me, it may work for you too, but use it at your own risk.
 
 ## Features
 
@@ -16,7 +16,10 @@ windows you can have open at any time.
 - Choose what happens when tab limit is reached:
     - Close the new tab
     - Focus on the oldest tab
-    - Show a notification page (reuses the same tab if already open)
+    - Show a notification page with the following options:
+        - View the URL you were attempting to open
+        - Open the URL in a new window (if under window limit)
+        - Bookmark the URL for later with an auto-generated title
 - Silent handling of window limit (new windows that exceed the limit just don't open)
 
 ## Installation
@@ -60,7 +63,10 @@ Safari requires additional steps to create a Safari App Extension:
 3. Choose what happens when you reach the limit:
     - "Close new tab": Simply closes any tab that exceeds the limit
     - "Focus on oldest tab": Switches focus to your oldest tab instead of opening a new one
-    - "Show limit notification": Shows a notification page (reuses the same tab if already open)
+    - "Show limit notification": Shows a notification page with the URL you were attempting to visit and options to:
+        - Open the URL in a new window (if under window limit)
+        - Bookmark the URL for later
+        - Adjust your tab limit settings
 
 ### Accessing Settings
 
@@ -108,3 +114,5 @@ tabcap/
 - The options page is always allowed to open, even when at tab limit
 - You can access settings through the popup or by right-clicking the extension icon
 - When you reach the window limit, new windows will simply not open
+
+- The bookmark feature automatically extracts a title from the URL, which you can edit before saving

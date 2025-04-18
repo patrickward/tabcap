@@ -71,31 +71,59 @@ function handleTabLimit(tab) {
       break;
 
     case 'redirect':
-      // Check if we already have a limit notification tab
-      if (limitNotificationTabId) {
-        // Check if the tab still exists
-        chrome.tabs.get(limitNotificationTabId, (existingTab) => {
-          if (chrome.runtime.lastError) {
-            // Tab no longer exists, create a new one
-            createLimitNotificationTab(tab);
-          } else {
-            // Tab exists, focus it and close the new tab
-            chrome.tabs.update(limitNotificationTabId, { active: true });
-            chrome.tabs.remove(tab.id);
-          }
-        });
-      } else {
-        // No existing notification tab, create one
-        createLimitNotificationTab(tab);
-      }
+      const tabUrl = tab.pendingUrl || tab.url || "";
+      // Check if it's a new tab page
+      const isNewTabPage = tabUrl === "chrome://newtab/" ||
+        tabUrl === "about:newtab" ||
+        tabUrl === "" ||
+        tabUrl === "edge://newtab/";
+
+      // Check if we're at window limit too
+      chrome.windows.getAll({}, (windows) => {
+        const isAtWindowLimit = windows.length >= settings.maxTotalWindows;
+
+        // We'll pass the URL directly as a query parameter
+        let redirectUrl = chrome.runtime.getURL("limit-reached.html");
+
+        // Only add URL as parameter if it's not a new tab page
+        if (!isNewTabPage) {
+          // Encode the URL to make it safe for a query parameter
+          const encodedUrl = encodeURIComponent(tabUrl);
+          redirectUrl += `?url=${encodedUrl}&windowLimit=${isAtWindowLimit}`;
+        } else {
+          // Still pass window limit info
+          redirectUrl += `?windowLimit=${isAtWindowLimit}`;
+        }
+
+        // Check if we already have a limit notification tab
+        if (limitNotificationTabId) {
+          // Check if the tab still exists
+          chrome.tabs.get(limitNotificationTabId, (existingTab) => {
+            if (chrome.runtime.lastError) {
+              // Tab no longer exists, create a new one
+              createLimitNotificationTab(tab, redirectUrl);
+            } else {
+              // Tab exists, update its URL to refresh with new parameters
+              chrome.tabs.update(limitNotificationTabId, {
+                url: redirectUrl,
+                active: true
+              });
+              chrome.tabs.remove(tab.id);
+            }
+          });
+        } else {
+          // No existing notification tab, create one
+          createLimitNotificationTab(tab, redirectUrl);
+        }
+      });
       break;
   }
 }
 
 // Create a limit notification tab
-function createLimitNotificationTab(tab) {
+function createLimitNotificationTab(tab, redirectUrl) {
   chrome.tabs.update(tab.id, {
-    url: chrome.runtime.getURL("limit-reached.html")
+    url: redirectUrl
   }, (updatedTab) => {
     if (updatedTab) {
       limitNotificationTabId = updatedTab.id;
@@ -122,3 +150,45 @@ function handleWindowLimit(windows) {
     chrome.windows.remove(windows[0].id);
   }
 }
+
+// Handle direct navigation messages from the limit-reached page
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "openInNewWindow" && request.url) {
+    try {
+      // Create a new window with the URL
+      chrome.windows.create({
+        url: request.url,
+        focused: true
+      }, (newWindow) => {
+        // Success
+        if (newWindow) {
+          // If this message came from our notification tab, clean it up
+          if (sender.tab && sender.tab.id === limitNotificationTabId) {
+            // Reset the ID first
+            const oldTabId = limitNotificationTabId;
+            limitNotificationTabId = null;
+            // Then close the tab
+            chrome.tabs.remove(oldTabId);
+          }
+          sendResponse({ success: true });
+        } else {
+          sendResponse({ success: false, error: "Failed to create new window" });
+        }
+      });
+      return true; // Indicates we'll send a response asynchronously
+    } catch (error) {
+      console.error("Error opening URL in new window:", error);
+      sendResponse({ success: false, error: error.message });
+    }
+  }
+
+  if (request.action === "bookmarkUrl" && request.url && request.title) {
+    chrome.bookmarks.create({
+      title: request.title,
+      url: request.url
+    }, (bookmark) => {
+      sendResponse({ success: true, bookmark: bookmark });
+    });
+    return true;
+  }
+});
